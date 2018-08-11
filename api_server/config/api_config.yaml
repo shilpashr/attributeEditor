@@ -27,7 +27,7 @@ paths:
       tags:
       - "Attribute Editor"
       summary: "Gets list of available attributes"
-      description: "API to get a list of attribute available in the system"
+      description: "API to get a list of attribute definitions available in the system"
       operationId: "get_attribute_definition"
       produces:
       - "application/json"
@@ -68,6 +68,66 @@ paths:
                 example: "success"
         422:
           description: "Attribute not Valid"
+        500:
+          description: "Internal error"
+      x-swagger-router-controller: "api_server.attribute_editor_controller"
+  /attributeType/:
+    get:
+      tags:
+      - "Attribute Editor"
+      summary: "Gets list of available attribute type"
+      description: "API to get a list of attribute type available in the system"
+      operationId: "get_attribute_type"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/AttributeType"
+        500:
+          description: "Internal error"
+      x-swagger-router-controller: "api_server.attribute_editor_controller"
+  /attributeDataType/:
+    get:
+      tags:
+      - "Attribute Editor"
+      summary: "Gets list of available attribute data type"
+      description: "API to get a list of attribute tata ype available in the system"
+      operationId: "get_attribute_data_type"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/AttributeDataType"
+        500:
+          description: "Internal error"
+      x-swagger-router-controller: "api_server.attribute_editor_controller"
+  /attributeTags/:
+    get:
+      tags:
+      - "Attribute Editor"
+      summary: "Gets list of available attribute tags"
+      description: "API to get a list of attribute tags available in the system"
+      operationId: "get_attribute_tags"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/AttributeTags"
         500:
           description: "Internal error"
       x-swagger-router-controller: "api_server.attribute_editor_controller"
@@ -151,7 +211,7 @@ definitions:
         example: "firstName"
       description:
         type: "string"
-        example: "saurabh"
+        example: "firstName"
         description: "first name of the consumer"
       tags:
         type: "array"
@@ -161,8 +221,26 @@ definitions:
           type: "string"
     example:
       name: "firstName"
-      description: "saurabh"
+      description: "firstName"
       tags: "Name and firstName and lastName"
+  AttributeType:
+    type: "array"
+    description: "A Tag which refers the attribute, it can be a list of tags."
+    items:
+      type: "string"
+    example: "SingleValue/ArrayValue"
+  AttributeDataType:
+    type: "array"
+    description: "A Tag which refers the attribute, it can be a list of tags."
+    items:
+      type: "string"
+    example: "str/int/bool"
+  AttributeTags:
+    type: "array"
+    description: "A Tag which refers the attribute, it can be a list of tags."
+    items:
+      type: "string"
+    example: "name,fullName"
   inline_response_200:
     properties:
       message:
