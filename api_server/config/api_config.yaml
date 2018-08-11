@@ -1,0 +1,172 @@
+---
+swagger: "2.0"
+info:
+  description: "This is the proposed APIs for SSN Operations to enable Attribute Editor \n"
+  version: "1.0.2"
+  title: "Attribute Editor"
+
+schemes:
+- "https"
+- "http"
+security:
+- APISecurity: []
+paths:
+  /:
+    get:
+      description: "default path"
+      operationId: "default_response"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "Welcome to Attribute Editor APIs Version 1.0.0"
+      x-swagger-router-controller: "api_server.default_controller"
+  /attributes/:
+    get:
+      tags:
+      - "Attribute Editor"
+      summary: "Gets list of available attributes"
+      description: "API to get a list of attribute available in the system"
+      operationId: "get_attribute_definition"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Attribute"
+        500:
+          description: "Internal error"
+      x-swagger-router-controller: "api_server.attribute_editor_controller"
+    post:
+      tags:
+      - "Attribute Editor"
+      summary: "Add New Attribute"
+      description: "Add attribute"
+      operationId: "add_attribute_definition"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Attribute definition that needs to be added"
+        required: true
+        schema:
+          $ref: "#/definitions/Attribute"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "object"
+            properties:
+              message:
+                type: "string"
+                example: "success"
+        422:
+          description: "Attribute not Valid"
+        500:
+          description: "Internal error"
+      x-swagger-router-controller: "api_server.attribute_editor_controller"
+  /modifyAttribute/:
+    post:
+      tags:
+      - "Attribute Editor"
+      summary: "Attribute modification , only description and tags are supported."
+      description: "Modify attribute definition"
+      operationId: "modify_attribute_definition"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Attribute definition needs to modify"
+        required: true
+        schema:
+          $ref: "#/definitions/AttributeDetails"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "object"
+            properties:
+              message:
+                type: "string"
+                example: "success"
+        422:
+          description: "Invalid data"
+        500:
+          description: "Internal error"
+      x-swagger-router-controller: "api_server.attribute_editor_controller"
+securityDefinitions:
+  APISecurity:
+    type: "apiKey"
+    name: "Authorization"
+    in: "header"
+definitions:
+  Attribute:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        example: "firstName"
+        description: "Name of attribute"
+      type:
+        type: "string"
+        example: "SingleValue/ArrayValue"
+        description: "Type of attribute"
+      datatype:
+        type: "string"
+        example: "str/int/bool"
+        description: "Data type of attribute"
+      path:
+        type: "string"
+        example: "/"
+        description: "Path of the attribute"
+      description:
+        type: "string"
+        example: "Description of the attribute"
+        description: "Description of attribute"
+      tags:
+        type: "array"
+        example: "Name OR firstName OR lastName"
+        description: "A Tag which refers the attribute, it can be a list of tags."
+        items:
+          type: "string"
+    example:
+      path: "/"
+      datatype: "str/int/bool"
+      name: "firstName"
+      description: "Description of the attribute"
+      type: "SingleValue/ArrayValue"
+      tags: "Name OR firstName OR lastName"
+  AttributeDetails:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        example: "firstName"
+      description:
+        type: "string"
+        example: "saurabh"
+        description: "first name of the consumer"
+      tags:
+        type: "array"
+        example: "Name and firstName and lastName"
+        description: "A Tag which refers the attribute, it can be a list of tags."
+        items:
+          type: "string"
+    example:
+      name: "firstName"
+      description: "saurabh"
+      tags: "Name and firstName and lastName"
+  inline_response_200:
+    properties:
+      message:
+        type: "string"
+        example: "success"
+    example:
+      message: "success"

@@ -1,0 +1,4 @@
+blinker==1.4
+connexion==1.1.15
+Flask==1.0.1
+dnspython3==1.15.0
